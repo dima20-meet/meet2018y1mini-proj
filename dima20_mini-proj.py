@@ -41,6 +41,7 @@ snake = turtle.clone()
 snake.shape("circle")
 snake.color("orange")
 
+turtle.bgcolor("yellow")
 #Hide the turtle object (it's an arrow - we don't need to see it)
 turtle.hideturtle()
 
@@ -145,14 +146,16 @@ turtle.onkeypress(down, DOWN_ARROW)
 turtle.onkeypress(left, LEFT_ARROW)
 turtle.onkeypress(right, RIGHT_ARROW)
 turtle.listen()
-
-turtle.register_shape("trash.gif") #Add trash picture
+turtle.goto(0,400)
+turtle.write("Pizza Hunt!",font=("Comic Sans MS",60,"normal"), align="center")
+             
+turtle.register_shape("pizza.gif") #Add trash picture
                       # Make sure you have downloaded this shape 
-                      # from the Google Drive folder and saved it
+                     # from the Google Drive folder and saved it
                       # in the same folder as this Python script
-
 food = turtle.clone()
-food.shape("trash.gif") 
+food.shape("pizza.gif")
+
 
 #Locations of food
 food_pos = [(100,100), (-100,100), (-100,-100), (100,-100)]
@@ -263,7 +266,7 @@ def move_snake():
         old_stamp = stamp_list.append(0)
         snake.clearstamp(old_stamp)
         #pos_list.append()
-    if len(food_stamps) <= 6 :
+    if len(food_stamps) <= 8 :
     	make_food()
     #turtle.ontimer(move_snake,TIME_STEP)
     
