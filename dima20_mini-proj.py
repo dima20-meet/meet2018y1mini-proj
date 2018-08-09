@@ -10,12 +10,23 @@ import turtle
 import random #We'll need this later in the lab
 
 turtle.tracer(1,0) #This helps the turtle move more smoothly
-
 SIZE_X=800
 SIZE_Y=500
-turtle.setup(SIZE_X, SIZE_Y) #Curious? It's the turtle window  
-                             #size. 
+turtle.setup(1000, 1000) #Curious? It's the turtle window  
+                             #size.
 turtle.penup()
+border=turtle.clone()
+border.pensize(10)
+border.color("orange")
+border.penup()
+border.goto(400,-400)
+border.pendown()
+border.goto(400,400)
+border.goto(-400,400)
+border.goto(-400,-400)
+border.goto(400,-400)
+
+border.penup()
 
 SQUARE_SIZE = 20
 START_LENGTH = 8
@@ -25,10 +36,10 @@ pos_list = []
 stamp_list = []
 food_pos = []
 food_stamps = []
-
 #Set up positions (x,y) of boxes that make up the snake
 snake = turtle.clone()
-snake.shape("square")
+snake.shape("circle")
+snake.color("orange")
 
 #Hide the turtle object (it's an arrow - we don't need to see it)
 turtle.hideturtle()
@@ -135,6 +146,32 @@ turtle.onkeypress(left, LEFT_ARROW)
 turtle.onkeypress(right, RIGHT_ARROW)
 turtle.listen()
 
+turtle.register_shape("trash.gif") #Add trash picture
+                      # Make sure you have downloaded this shape 
+                      # from the Google Drive folder and saved it
+                      # in the same folder as this Python script
+
+food = turtle.clone()
+food.shape("trash.gif") 
+
+#Locations of food
+food_pos = [(100,100), (-100,100), (-100,-100), (100,-100)]
+food_stamps = []
+
+# Write code that:
+#1. moves the food turtle to each food position
+#2. stamps the food turtle at that location
+#3. saves the stamp by appending it to the food_stamps list using
+# food_stamps.append(    )
+#4. Don’t forget to hide the food turtle!
+for this_food_pos in food_pos :
+    ####WRITE YOUR CODE HERE!!
+    
+    food.penup()
+    food.goto(this_food_pos)
+    food_stamp = food.stamp()
+    food_stamps.append(food_stamp)
+    
 def make_food():
     #The screen positions go from -SIZE/2 to +SIZE/2
     #But we need to make food pieces only appear on game squares
@@ -156,7 +193,7 @@ def make_food():
         ##3.WRITE YOUR CODE HERE: Add the food turtle's stamp to the food stamps list
     food_stamp = food.stamp()
     food_stamps.append(food_stamp)
-
+   
 def move_snake():
     
     #Add new lines to the end of the function
@@ -218,10 +255,16 @@ def move_snake():
     if snake.pos() in food_pos:
         food_ind=food_pos.index(snake.pos()) #What does this do?
         food.clearstamp(food_stamps[food_ind]) #Remove eaten food                 
-                                               #stamp
+                                          #stamp
         food_pos.pop(food_ind) #Remove eaten food position
         food_stamps.pop(food_ind) #Remove eaten food stamp
         print("You have eaten the food!")
+        
+        old_stamp = stamp_list.append(0)
+        snake.clearstamp(old_stamp)
+        #pos_list.append()
+    if len(food_stamps) <= 6 :
+    	make_food()
     #turtle.ontimer(move_snake,TIME_STEP)
     
     
@@ -242,31 +285,11 @@ def move_snake():
     snake.clearstamp(old_stamp)
     pos_list.pop(0)
     turtle.ontimer(move_snake,TIME_STEP) #<--Last line of function
+    if snake.pos() in pos_list[:-1]:
+        print ("the body touched the head!")
+        quit()
 
 move_snake()
 
-turtle.register_shape("trash.gif") #Add trash picture
-                      # Make sure you have downloaded this shape 
-                      # from the Google Drive folder and saved it
-                      # in the same folder as this Python script
 
-food = turtle.clone()
-food.shape("trash.gif") 
-
-#Locations of food
-food_pos = [(100,100), (-100,100), (-100,-100), (100,-100)]
-food_stamps = []
-
-# Write code that:
-#1. moves the food turtle to each food position
-#2. stamps the food turtle at that location
-#3. saves the stamp by appending it to the food_stamps list using
-# food_stamps.append(    )
-#4. Don’t forget to hide the food turtle!
-for this_food_pos in food_pos :
-    ####WRITE YOUR CODE HERE!!
-    food.penup()
-    food.goto(this_food_pos)
-    food_stamps.append(this_food_pos)
-    food.stamp()
     
